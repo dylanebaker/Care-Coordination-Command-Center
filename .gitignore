@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+
+# pytest
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Virtual env
+.venv/
+
+# Data / generated artifacts
+data/
+tracks/**/data/raw/
+buildersvault-hackathon-kit/tracks/**/data/raw/
+*.parquet
+*.sqlite
+
+# Ignore test artifacts
+htmlcov/
+coverage.xml
+
+# Misc
+*.egg-info/
+.dist-info/
