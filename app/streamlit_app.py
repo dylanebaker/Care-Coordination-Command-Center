@@ -63,7 +63,7 @@ with col1:
         "Live scan of all active consent violations — expired records, withdrawn consent "
         "still in use, OCAP overrides, and FOIPPA gaps."
     )
-    st.page_link("pages/Consent_Monitor.py", label="Open Consent Monitor →")
+    st.page_link("pages/1_Consent_Monitor.py", label="Open Consent Monitor →")
 
 with col2:
     st.markdown("### ⚠️ At-Risk Dashboard")
@@ -71,7 +71,7 @@ with col2:
         "Clients most likely to fall through the gaps between organizations, ranked by risk score. "
         "Chronic homelessness, lost contact, stalled referrals, expiring consent."
     )
-    st.page_link("pages/Risk_Dashboard.py", label="Open Risk Dashboard →")
+    st.page_link("pages/2_Risk_Dashboard.py", label="Open Risk Dashboard →")
 
 with col3:
     st.markdown("### 👤 Client Timeline")
@@ -79,7 +79,7 @@ with col3:
         "Full referral and encounter history for a single client, with consent status "
         "badges on every record. OCAP and withdrawn records shown as redaction notices."
     )
-    st.page_link("pages/Client_Timeline.py", label="Open Client Timeline →")
+    st.page_link("pages/3_Client_Timeline.py", label="Open Client Timeline →")
 
 st.success(
     "🔒 **Privacy gate active on all pages** — OCAP, PIPA, and FOIPPA rules are enforced "

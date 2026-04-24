@@ -295,7 +295,7 @@ Scores are capped at **100**. Tiers: critical ≥65, high ≥40, medium ≥20, l
     if selected_id:
         st.session_state["selected_client_id"] = selected_id
         st.success(f"Selected: **{options[selected_id]}**")
-        st.page_link("pages/Client_Timeline.py", label="Open Client Timeline →")
+        st.page_link("pages/3_Client_Timeline.py", label="Open Client Timeline →")
 
 
 if __name__ == "__main__":

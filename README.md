@@ -55,9 +55,9 @@ Care Coordination Command Center/
 ├── app/
 │   ├── streamlit_app.py          # Landing page — navigation hub
 │   └── pages/
-│       ├── Consent_Monitor.py    # Violation scan dashboard
-│       ├── Risk_Dashboard.py     # Risk-ranked client list
-│       └── Client_Timeline.py    # Per-client consent-badged timeline
+│       ├── 1_Consent_Monitor.py    # Violation scan dashboard
+│       ├── 2_Risk_Dashboard.py     # Risk-ranked client list
+│       └── 3_Client_Timeline.py    # Per-client consent-badged timeline
 ├── src/
 │   ├── consent_gate.py           # Privacy gate — all 5 rules live here
 │   └── risk_scorer.py            # 13-factor rule-based risk scoring
