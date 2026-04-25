@@ -90,22 +90,10 @@ Follow these steps in order. Important: install dependencies before running the 
 
 ### 1) Clone (with submodules)
 
-Clone the repo including the BuildersVault starter kit submodule (recommended):
+Clone the repo including the BuildersVault starter kit submodule:
 
 ```bash
 git clone --recurse-submodules https://github.com/dylanebaker/Care-Coordination-Command-Center.git
-```
-
-If you already cloned without submodules:
-
-```bash
-git submodule update --init --recursive
-```
-
-To update just the starter kit later:
-
-```bash
-git -C buildersvault-hackathon-kit pull origin main
 ```
 
 ### 2) Create and activate a virtual environment (recommended)
@@ -114,8 +102,7 @@ git -C buildersvault-hackathon-kit pull origin main
 cd "Care Coordination Command Center"
 
 # Windows (PowerShell)
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+py -3 -m venv .venv
 
 # macOS / Linux
 python -m venv .venv
@@ -127,14 +114,9 @@ source .venv/bin/activate
 Install the app requirements and the starter-kit requirements so both the dashboard and the data generator have the packages they need (this ensures `numpy` is available when you run the generator):
 
 ```bash
-pip install -r requirements.txt
-pip install -r buildersvault-hackathon-kit/requirements.txt
-```
-
-If you prefer a smaller install for only generation, install the kit requirements instead:
-
-```bash
-pip install -r buildersvault-hackathon-kit/requirements.txt
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r buildersvault-hackathon-kit/requirements.txt
 ```
 
 ### 4) Generate the Track 1 data (optional)
@@ -142,39 +124,64 @@ pip install -r buildersvault-hackathon-kit/requirements.txt
 If you need synthetic Track 1 files, run the generator from the starter kit. With the virtual environment active and the kit requirements installed, this should run without missing-module errors:
 
 ```bash
-cd buildersvault-hackathon-kit
-python tracks/referral-care-coordination/generator/generate.py
+.\.venv\Scripts\python.exe buildersvault-hackathon-kit\tracks\referral-care-coordination\generator\generate.py
 ```
 
 If you see an error like `ModuleNotFoundError: No module named 'numpy'`, return to step 3 and run the `pip install -r buildersvault-hackathon-kit/requirements.txt` command, or run `pip install numpy`.
 
-### 5) Point the app at the generated data
 
-PowerShell example:
-
-```powershell
-$env:TRACK1_DATA_DIR = "D:\\path\\to\\repo\\buildersvault-hackathon-kit\\tracks\\referral-care-coordination\\data\\raw"
-streamlit run app/streamlit_app.py
-```
-
-bash / macOS example:
-
-```bash
-export TRACK1_DATA_DIR="$(pwd)/buildersvault-hackathon-kit/tracks/referral-care-coordination/data/raw"
-streamlit run app/streamlit_app.py
-```
-
-### 6) Launch the app
+### 5) Launch the app
 
 From the project root (with the venv active):
 
 ```bash
-streamlit run app/streamlit_app.py
+.venv/bin/python -m streamlit run app/streamlit_app.py
 ```
 
 The app opens at http://localhost:8501
 
 ---
+
+### Troubleshooting
+
+- No module named `shared` (Streamlit pages fail to import)
+
+	Streamlit runs page scripts as separate modules which can execute before the main
+	`app/streamlit_app.py` modifies `sys.path`. If you see `ModuleNotFoundError: No
+	module named 'shared'`, make sure Python can find the starter-kit `shared` package
+	by adding the project root and the starter kit to `PYTHONPATH`, or run Streamlit
+	with the venv's Python directly.
+
+	PowerShell (from the project root):
+
+	```powershell
+	$env:PYTHONPATH = "$((Get-Location).Path);$((Join-Path (Get-Location).Path 'buildersvault-hackathon-kit'))"
+	streamlit run app/streamlit_app.py
+	```
+
+	Bash / WSL / Git Bash:
+
+	```bash
+	export PYTHONPATH="$(pwd):$(pwd)/buildersvault-hackathon-kit"
+	streamlit run app/streamlit_app.py
+	```
+
+	Or run Streamlit via the venv Python (no activation required):
+
+	PowerShell:
+	```powershell
+	.\.venv\Scripts\python.exe -m streamlit run app/streamlit_app.py
+	```
+
+	Bash / WSL:
+	```bash
+	.venv/bin/python -m streamlit run app/streamlit_app.py
+	```
+
+	If you created the venv in a different shell (e.g., created under WSL but you're
+	using PowerShell), recreate the venv from the shell you plan to use or switch to
+	that shell to activate it.
+
 
 ## Running the tests
 

@@ -18,8 +18,13 @@ import streamlit as st
 
 # Make src/ and the starter kit importable regardless of launch directory.
 _PROJECT_ROOT = Path(__file__).resolve().parents[1]
-_KIT_ROOT = _PROJECT_ROOT.parent / "buildersvault-hackathon-kit"
-for p in [str(_PROJECT_ROOT), str(_KIT_ROOT)]:
+# Support two possible locations for the starter-kit: inside the project root
+# or as a sibling in the parent folder. Insert both candidates on sys.path so
+# pages run by Streamlit can always import `shared` regardless of layout.
+_KIT_INSIDE = _PROJECT_ROOT / "buildersvault-hackathon-kit"
+_KIT_PARENT = _PROJECT_ROOT.parent / "buildersvault-hackathon-kit"
+_KIT_ROOT = _KIT_INSIDE if _KIT_INSIDE.exists() else _KIT_PARENT
+for p in [str(_PROJECT_ROOT), str(_KIT_INSIDE), str(_KIT_PARENT)]:
     if p not in sys.path:
         sys.path.insert(0, p)
 

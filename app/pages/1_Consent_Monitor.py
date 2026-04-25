@@ -15,10 +15,13 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-# Make src/ and the starter kit importable.
+# Make src/ and the starter kit importable. Support both possible starter-kit
+# locations (inside project root, or as a sibling in the parent folder).
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
-_KIT_ROOT = _PROJECT_ROOT.parent / "buildersvault-hackathon-kit"
-for p in [str(_PROJECT_ROOT), str(_KIT_ROOT)]:
+_KIT_INSIDE = _PROJECT_ROOT / "buildersvault-hackathon-kit"
+_KIT_PARENT = _PROJECT_ROOT.parent / "buildersvault-hackathon-kit"
+_KIT_ROOT = _KIT_INSIDE if _KIT_INSIDE.exists() else _KIT_PARENT
+for p in [str(_PROJECT_ROOT), str(_KIT_INSIDE), str(_KIT_PARENT)]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
