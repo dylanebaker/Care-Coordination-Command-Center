@@ -114,7 +114,6 @@ source .venv/bin/activate
 Install the app requirements and the starter-kit requirements so both the dashboard and the data generator have the packages they need (this ensures `numpy` is available when you run the generator):
 
 ```bash
-py -3 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m pip install -r buildersvault-hackathon-kit/requirements.txt
 ```
