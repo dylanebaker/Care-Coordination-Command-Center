@@ -87,7 +87,7 @@ This repository includes the BuildersVault starter kit as a git submodule at `bu
 
 Clone with submodules:
 ```bash
-git clone --recurse-submodules https://github.com/YOUR_GH_USERNAME/YOUR_REPO_NAME.git
+git clone --recurse-submodules https://github.com/dylanebaker/Care-Coordination-Command-Center.git
 ```
 
 If you've already cloned without submodules:
