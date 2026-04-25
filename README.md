@@ -81,55 +81,34 @@ client into a tier: critical (≥65), high (≥40), medium (≥20), low (<20).
 
 ## How to run it
 
-### Using the BuildersVault starter kit (recommended)
-
-This repository includes the BuildersVault starter kit as a git submodule at `buildersvault-hackathon-kit`. The submodule contains the data generator and the synthetic Track 1 dataset. We keep generated binary data out of this repo — do not copy or commit `.parquet` files or the generated `track1.sqlite` into this repository (they are excluded by `.gitignore`).
-
-Clone with submodules:
-```bash
-git clone --recurse-submodules https://github.com/dylanebaker/Care-Coordination-Command-Center.git
-```
-
-If you've already cloned without submodules:
-```bash
-git submodule update --init --recursive
-```
-
-To update the starter kit later:
-```bash
-git -C buildersvault-hackathon-kit pull origin main
-```
-
-Generate Track 1 data from the kit (run inside your venv):
-```bash
-cd buildersvault-hackathon-kit
-python -m pip install Faker==25.0.0
-python tracks/referral-care-coordination/generator/generate.py
-```
-
-Point the app at the generated files (PowerShell example):
-```powershell
-$env:TRACK1_DATA_DIR = "D:\\path\\to\\repo\\buildersvault-hackathon-kit\\tracks\\referral-care-coordination\\data\\raw"
-```
-
-Or in bash/macOS:
-```bash
-export TRACK1_DATA_DIR="$(pwd)/buildersvault-hackathon-kit/tracks/referral-care-coordination/data/raw"
-```
+Follow these steps in order. Important: install dependencies before running the data generator — the generator (and the app) require packages such as `numpy`, `pandas`, and `Faker`.
 
 ### Prerequisites
 
 - Python 3.10+
-- The Track 1 data files in `buildersvault-hackathon-kit/tracks/referral-care-coordination/data/raw/`
+- Git (to clone with submodules)
 
-### 1. Generate the Track 1 data (if not already done)
+### 1) Clone (with submodules)
+
+Clone the repo including the BuildersVault starter kit submodule (recommended):
 
 ```bash
-cd buildersvault-hackathon-kit
-python tracks/referral-care-coordination/generator/generate.py
+git clone --recurse-submodules https://github.com/dylanebaker/Care-Coordination-Command-Center.git
 ```
 
-### 2. Create and activate a virtual environment
+If you already cloned without submodules:
+
+```bash
+git submodule update --init --recursive
+```
+
+To update just the starter kit later:
+
+```bash
+git -C buildersvault-hackathon-kit pull origin main
+```
+
+### 2) Create and activate a virtual environment (recommended)
 
 ```bash
 cd "Care Coordination Command Center"
@@ -143,30 +122,57 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Install dependencies
+### 3) Install dependencies (do this before generating data)
+
+Install the app requirements and the starter-kit requirements so both the dashboard and the data generator have the packages they need (this ensures `numpy` is available when you run the generator):
 
 ```bash
 pip install -r requirements.txt
+pip install -r buildersvault-hackathon-kit/requirements.txt
 ```
 
-### 4. Launch
+If you prefer a smaller install for only generation, install the kit requirements instead:
+
+```bash
+pip install -r buildersvault-hackathon-kit/requirements.txt
+```
+
+### 4) Generate the Track 1 data (optional)
+
+If you need synthetic Track 1 files, run the generator from the starter kit. With the virtual environment active and the kit requirements installed, this should run without missing-module errors:
+
+```bash
+cd buildersvault-hackathon-kit
+python tracks/referral-care-coordination/generator/generate.py
+```
+
+If you see an error like `ModuleNotFoundError: No module named 'numpy'`, return to step 3 and run the `pip install -r buildersvault-hackathon-kit/requirements.txt` command, or run `pip install numpy`.
+
+### 5) Point the app at the generated data
+
+PowerShell example:
+
+```powershell
+$env:TRACK1_DATA_DIR = "D:\\path\\to\\repo\\buildersvault-hackathon-kit\\tracks\\referral-care-coordination\\data\\raw"
+streamlit run app/streamlit_app.py
+```
+
+bash / macOS example:
+
+```bash
+export TRACK1_DATA_DIR="$(pwd)/buildersvault-hackathon-kit/tracks/referral-care-coordination/data/raw"
+streamlit run app/streamlit_app.py
+```
+
+### 6) Launch the app
+
+From the project root (with the venv active):
 
 ```bash
 streamlit run app/streamlit_app.py
 ```
 
-The app opens at **http://localhost:8501**.
-
-To point the app at a different data folder:
-
-```bash
-# Windows (PowerShell)
-$env:TRACK1_DATA_DIR = "C:\path\to\data\raw"
-streamlit run app/streamlit_app.py
-
-# macOS / Linux
-TRACK1_DATA_DIR=/path/to/data/raw streamlit run app/streamlit_app.py
-```
+The app opens at http://localhost:8501
 
 ---
 
